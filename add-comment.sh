@@ -30,7 +30,7 @@ delete_comment_if_exists() {
 		id=$(echo "$comment" | jq --raw-output '.id')
 		b=$(echo "$comment" | jq --raw-output '.body')
 
-		if [[ "$b" == *"finger.gif"* ]]; then
+		if [[ "$b" == *"Deployed:"* ]]; then
 			# We have found our comment.
 			# Delete it.
 
@@ -41,7 +41,8 @@ delete_comment_if_exists() {
 }
 
 post_gif() {
-	curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" -d '{"body":"![finger.gif]('${GIF_URL}')"}' -H "Content-Type: application/json" -X POST "${URI}/repos/${GITHUB_REPOSITORY}/issues/${NUMBER}/comments"
+	MESSAGE=`cat $HOME/url.txt`
+	curl -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" -d '{"body":"Deployed: [Abrir]('${MESSAGE}')"}' -H "Content-Type: application/json" -X POST "${URI}/repos/${GITHUB_REPOSITORY}/issues/${NUMBER}/comments"
 }
 
 get_checks() {
